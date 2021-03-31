@@ -22,5 +22,25 @@ class Item
     def sale
         self.on_sale ? (return "#{@sale_quantity} for $#{@sale_price}0") : (nil)
     end
+
+    def total_with_sale(quantity) #5
+        if self.on_sale && quantity >= self.sale_quantity
+            sale_units = quantity/sale_quantity #2
+            remainder = quantity - (self.sale_quantity * sale_units) #1
+            total = (sale_units * self.sale_price) + (remainder * self.price)
+        else
+            total = self.total_without_sale(quantity)
+        end
+        return total
+    end
+
+    def total_without_sale(quantity)
+        self.price * quantity
+    end
+
+    def self.shopping_list(arr) # takes an arrage of shopping list items
+        # sorts the shopping list items and creates an object with the item names and quantities
+        # finds the item by name and runs the total method with quantity         
+    end
         
 end
