@@ -1,1 +1,6 @@
-puts "Welcome"
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "price_calculator"
+
+PriceCalculator::Menu.new.start
