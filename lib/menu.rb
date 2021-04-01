@@ -16,14 +16,15 @@ module PriceCalculator
             puts "Item      Unit Price       Sale Price"
             puts "-----------------------------------------"
             # iterate over a list of Items and display puts with name, price, and sales if it has a sale price
+            Item.all.each { |i| puts "#{i.name}       $#{i.price}           #{i.sale}"}
             list = gets.chomp
             calculate_list(list)
         end
 
-        def calculate_list(list)
-            #sorts the list of items given and calculates their quanitities
+        def calculate_list(items)
             new_list = Hash.new(0)
-            list.split(",").each { |k| new_list[k] += 1 }
+            list = items.split(",").collect(&:strip)
+            list.each { |k| new_list[k] += 1 } # {"milk"=>3, "bread"=>4, "banana"=>1, "apple"=>1}
             # execute results
         end
 
