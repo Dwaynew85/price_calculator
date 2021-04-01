@@ -46,11 +46,15 @@ module PriceCalculator
         def self.totals(item)
             grocery_list = Hash.new(0)
             grocery = self.find_by_name(item[0])
-            grocery_list["name"] = grocery.name
-            grocery_list["quantity"] = item[1]
-            grocery_list["total"] = grocery.total_with_sale(item[1])
-            grocery_list["total_without_sale"] = grocery.price * item[1]
-            grocery_list       
+            if grocery
+                grocery_list["name"] = grocery.name
+                grocery_list["quantity"] = item[1]
+                grocery_list["total"] = grocery.total_with_sale(item[1])
+                grocery_list["total_without_sale"] = grocery.price * item[1]
+                grocery_list
+            else
+                puts "Invalid item(s) \n\n"
+            end       
         end        
     end
 end
