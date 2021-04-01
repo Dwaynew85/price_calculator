@@ -40,7 +40,7 @@ module PriceCalculator
                 total_without_sale += item["total_without_sale"]
             end
             puts ""
-            puts "Total price: $#{total}" 
+            puts "Total price: $#{"%5.2f" % total}" 
             puts "You saved $#{"%5.2f" % (total_without_sale - total)} today."
         end
 
