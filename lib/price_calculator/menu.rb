@@ -11,8 +11,8 @@ module PriceCalculator
         end
 
         def main_menu
-            puts "Please enter all the items purchased seperated by a comma"
-            puts ""
+            puts "Please enter all the items purchased seperated by a comma \n\n"
+            
             puts "Item      Unit Price       Sale Price"
             puts "-----------------------------------------"
             Item.all.each { |i| puts "#{i.name}       $#{"%5.2f" % i.price}           #{i.sale}"}
@@ -25,14 +25,20 @@ module PriceCalculator
             list = items.split(",").collect(&:strip)
             list.each { |k| new_list[k] += 1 } 
             items_list = new_list.collect { |item| Item.totals(item)}
-            results(items_list)
+            if items_list.include?(nil)
+                puts "Only enter items available on the list"
+                new_items = gets.chomp
+                calculate_list(new_items)
+            else
+                results(items_list)
+            end
         end
 
         def results(items_list) 
             total = 0
             total_without_sale = 0
             puts "Item       Quantity        Price"
-            puts "-----------------------------------------"
+            puts "----------------------------------------- \n"
             puts ""
             items_list.each do |item| 
                 puts "#{item["name"]}       #{item["quantity"]}               $#{"%5.2f" % item["total"]}" 
