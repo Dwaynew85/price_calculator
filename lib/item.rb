@@ -42,18 +42,24 @@ class Item
         self.price * quantity
     end
 
-    def self.shopping_list(hash) 
-        # finds the item by name and runs the total method with quantity
+    # def self.totals(hash)
+    #     grocery_list = Hash.new(0)
+    #     hash.each do |item, quantity|
+    #        grocery = self.find_by_name(item)
+    #        grocery_list[grocery.name] = grocery.total_with_sale(quantity)
+    #        grocery_list["total_without_sale"] = grocery.price * quantity
+    #     end
+    #     grocery_list       
+    # end
+
+    def self.totals(item)
         grocery_list = Hash.new(0)
-        total = 0
-        sale_total = 0
-        hash.each do |item, quantity|
-           grocery = self.find_by_name(item)
-           grocery_list[grocery.name] = grocery.total_with_sale(quantity)
-           total += grocery.price * quantity
-           sale_total += grocery_list[grocery]
-        end
-        # returns a hash of products with totals        
+        grocery = self.find_by_name(item[0])
+        grocery_list["name"] = grocery.name
+        grocery_list["quantity"] = item[1]
+        grocery_list["total"] = grocery.total_with_sale(item[1])
+        grocery_list["total_without_sale"] = grocery.price * item[1]
+        grocery_list       
     end
         
 end
