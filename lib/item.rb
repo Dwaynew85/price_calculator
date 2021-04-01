@@ -13,6 +13,10 @@ class Item
         @@all
     end
 
+    def self.find_by_name(name)
+        self.all.find { |i| i.name == name.capitalize }
+    end
+
     def save_sale(sale)
         self.sale_quantity = sale[0].to_i
         self.sale_price = sale[/\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})/].to_f
@@ -20,13 +24,13 @@ class Item
     end
 
     def sale
-        self.on_sale ? (return "#{@sale_quantity} for $#{@sale_price}0") : (nil)
+        self.on_sale ? (return "#{@sale_quantity} for $#{"%5.2f" % @sale_price}") : (nil)
     end
 
-    def total_with_sale(quantity) #5
+    def total_with_sale(quantity) 
         if self.on_sale && quantity >= self.sale_quantity
-            sale_units = quantity/sale_quantity #2
-            remainder = quantity - (self.sale_quantity * sale_units) #1
+            sale_units = quantity/sale_quantity
+            remainder = quantity - (self.sale_quantity * sale_units) 
             total = (sale_units * self.sale_price) + (remainder * self.price)
         else
             total = self.total_without_sale(quantity)
@@ -38,9 +42,18 @@ class Item
         self.price * quantity
     end
 
-    def self.shopping_list(arr) # takes an arrage of shopping list items
-        # sorts the shopping list items and creates an object with the item names and quantities
-        # finds the item by name and runs the total method with quantity         
+    def self.shopping_list(hash) 
+        # finds the item by name and runs the total method with quantity
+        grocery_list = Hash.new(0)
+        total = 0
+        sale_total = 0
+        hash.each do |item, quantity|
+           grocery = self.find_by_name(item)
+           grocery_list[grocery.name] = grocery.total_with_sale(quantity)
+           total += grocery.price * quantity
+           sale_total += grocery_list[grocery]
+        end
+        # returns a hash of products with totals        
     end
         
 end
