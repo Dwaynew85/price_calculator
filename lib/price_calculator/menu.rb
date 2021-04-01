@@ -16,6 +16,7 @@ module PriceCalculator
             puts "Item      Unit Price       Sale Price"
             puts "-----------------------------------------"
             Item.all.each { |i| puts "#{i.name}       $#{"%5.2f" % i.price}           #{i.sale}"}
+            puts "\n"
             list = gets.chomp
             calculate_list(list)
         end
@@ -37,17 +38,18 @@ module PriceCalculator
         def results(items_list) 
             total = 0
             total_without_sale = 0
+            puts "\n"
             puts "Item       Quantity        Price"
-            puts "----------------------------------------- \n"
-            puts ""
+            puts "-----------------------------------------"
             items_list.each do |item| 
                 puts "#{item["name"]}       #{item["quantity"]}               $#{"%5.2f" % item["total"]}" 
                 total += item["total"]
                 total_without_sale += item["total_without_sale"]
             end
-            puts ""
+            puts "\n"
             puts "Total price: $#{"%5.2f" % total}" 
             puts "You saved $#{"%5.2f" % (total_without_sale - total)} today."
+            puts "\n"
         end
 
     end
