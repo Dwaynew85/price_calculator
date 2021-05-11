@@ -3,8 +3,8 @@
 
 require "bundler/setup"
 require "price_calculator"
-require "item"
-require "menu"
+require "price_calculator/item"
+require "price_calculator/menu"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
